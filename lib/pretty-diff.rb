@@ -94,7 +94,7 @@ module PrettyDiff
         end
       end.join("\n")
       if @options[:list_style]
-        lines = "<#{@options[:list_style]} class="pretty-diff">\n#{lines}\n</#{@options[:list_style]}>"
+        lines = "<#{@options[:list_style]} class=\"pretty-diff\">\n#{lines}\n</#{@options[:list_style]}>"
       end
       return lines
     end

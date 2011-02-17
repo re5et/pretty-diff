@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "pretty-diff"
   gem.homepage = "http://github.com/re5et/pretty-diff"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = "Creates pretty html diffs of two files or two strings"
+  gem.description = "Uses the unix diff utility to create pretty html diffs from two files or two strings."
   gem.email = "re5etsmyth@gmail.com"
   gem.authors = ["atom smith"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,

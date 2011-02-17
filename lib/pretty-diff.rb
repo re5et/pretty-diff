@@ -55,7 +55,9 @@ module PrettyDiff
       defaults = {
         :remove_signs              => false,
         :remove_leading_file_lines => false,
-        :as_list_items             => true
+        :as_list_items             => true,
+        :list_style                => 'ul',
+        :no_newline_warning        => false
       }
 
       @options = defaults.merge options
@@ -72,7 +74,11 @@ module PrettyDiff
     # removes +'s and -'s and wraps the changed lines in either
     # ins or del html tags so it can be styles accordingly
     def to_html
-      @lines.each_line.map do |line|
+      lines = @lines.each_line.map do |line|
+        line.chomp!
+        unless @options[:no_newline_warning]
+          next if line == '\ No newline at end of file'
+        end
         if @options[:remove_leading_file_lines]
           if line =~ /\A[\+|-]{3}/
             next
@@ -81,14 +87,16 @@ module PrettyDiff
         if line !~ /\A[\+|-]{3}\s/ && line =~ /\A(\+|-)/
           tag = $~[0] == '-' ? 'del' : 'ins'
           line = line.gsub(/\A./, '') if @options[:remove_signs]
-          line = "<#{tag}>#{line.chomp.gsub(/\s/,'&nbsp;')}</#{tag}>"
-        else
-          line.chomp
+          line = "<#{tag}>#{line.gsub(/\s/,'&nbsp;')}</#{tag}>"
         end
         if @options[:as_list_items]
-          line = "<li class=\"#{tag}\">#{line}</li>"
+          line = "<li#{ " class=\"#{tag}\"" if tag }>#{line}</li>"
         end
       end.join("\n")
+      if @options[:list_style]
+        lines = "<#{@options[:list_style]}>\n#{lines}\n</#{@options[:list_style]}>"
+      end
+      return lines
     end
 
   end

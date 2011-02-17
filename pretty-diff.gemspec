@@ -19,11 +19,13 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
     "lib/pretty-diff.rb",
+    "pretty-diff.gemspec",
     "test/helper.rb",
     "test/test_pretty-diff.rb"
   ]

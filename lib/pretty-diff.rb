@@ -57,7 +57,8 @@ module PrettyDiff
         :remove_leading_file_lines => false,
         :as_list_items             => true,
         :list_style                => 'ul',
-        :no_newline_warning        => false
+        :no_newline_warning        => false,
+        :fake_tab                  => 4
       }
 
       @options = defaults.merge options
@@ -88,6 +89,9 @@ module PrettyDiff
           tag = $~[0] == '-' ? 'del' : 'ins'
           line = line.gsub(/\A./, '') if @options[:remove_signs]
           line = "<#{tag}>#{line.gsub(/\s/,'&nbsp;')}</#{tag}>"
+        end
+        if @options[:fake_tab]
+          line = link.gsub(/\t/, '&nbsp;' * @options[:fake_tab])
         end
         if @options[:as_list_items]
           line = "<li#{ " class=\"#{tag}\"" if tag }>#{line}</li>"
